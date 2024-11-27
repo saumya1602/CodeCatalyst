@@ -1,19 +1,12 @@
-
 import { useState, useEffect } from 'react';
 import { countLines, countComments, cyclomaticComplexity, countIndents, countLoops, countIdentifiers } from '../../Scripts/CPPScoreCalculator.js';
 
 function CodeScore({ Code }) {
     const [score, setScore] = useState(null);
 
-    //called during component Mount and on every change in the Code
+    // called during component Mount and on every change in the Code
     useEffect(() => {
         const CalculateScore = () => {
-            // console.log("Lines", countLines(Code));
-            // console.log("Comments", countComments(Code));
-            // console.log("Cyclometric Complexity :", cyclomaticComplexity(Code));
-            // console.log("Indents", countIndents(Code));
-            // console.log("Loops", countLoops(Code));
-            // console.log("Identifiers", countIdentifiers(Code));
             setScore({
                 lines: countLines(Code),
                 comments: countComments(Code),
@@ -21,42 +14,40 @@ function CodeScore({ Code }) {
                 indents: countIndents(Code),
                 loops: countLoops(Code),
                 identifiers: countIdentifiers(Code)
-            })
+            });
         };
         CalculateScore();
     }, [Code]);
 
     return (
-        <div className='container'>
-            {/* display a sleek palet with all values */}
-            {score && <div className="row bg-dark bg-opacity-75 rounded-3" style={{ color: "white" }}>
-                <div className="col-4">
-                    <div className="row">
-                        <div className="col-12">
-                            <span>Lines : {score.lines}</span>
+        <div className="container py-5">
+            {/* Display the score in sleek, modern palette with the new theme */}
+            {score && (
+                <div className="row bg-light bg-opacity-75 rounded-3" style={{ color: "#333" }}>
+                    <div className="col-12 col-md-6">
+                        <div className="score-card">
+                            <span>Lines: {score.lines}</span>
                         </div>
-                        <div className="col-12">
-                            <span>Comments : {score.comments}</span>
+                        <div className="score-card">
+                            <span>Comments: {score.comments}</span>
                         </div>
-                        <div className="col-12">
-                            <span>Indents : {score.indents}</span>
+                        <div className="score-card">
+                            <span>Indents: {score.indents}</span>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                        <div className="score-card">
+                            <span>Cyclometric Complexity: {score.cyclometricComplexity}</span>
+                        </div>
+                        <div className="score-card">
+                            <span>Loops:  {score.loops}</span>
+                        </div>
+                        <div className="score-card">
+                            <span>Identifiers: {score.identifiers}</span>
                         </div>
                     </div>
                 </div>
-                <div className="col-4">
-                    <div className="row">
-                        <div className="col-12">
-                            <span>Cyclometric Complexity : {score.cyclometricComplexity}</span>
-                        </div>
-                        <div className="col-12">
-                            <span>Loops : {score.loops}</span>
-                        </div>
-                        <div className="col-12">
-                            <span>Identifiers : {score.identifiers}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>}
+            )}
         </div>
     );
 }

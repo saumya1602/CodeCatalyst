@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import NavbarWithProfileAndSidebar from "../../../components/Navbar/NavbarWithProfileAndSidebar";
-// import RightsReservedFooter from "../../../components/Footer/RightsReservedFooter";
 import { Form, Nav, Tab } from "react-bootstrap";
 import DescriptionTab from "./NavTabs/DescriptionTab";
 import CodeTab from "./NavTabs/CodeTab/CodeTab";
@@ -11,7 +10,6 @@ import { useParams } from "react-router-dom";
 import LoadingSpinner from "../../../components/Spinners/Spinners";
 
 let DefaultSolutionCode =
-
   `#include <iostream>
 using namespace std;
 int main() {
@@ -20,7 +18,6 @@ int main() {
 }`;
 
 let DefaultRandomTestCode =
-
   `#include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -28,20 +25,15 @@ let DefaultRandomTestCode =
 using namespace std;
 
 int main() {
-    // Seed the random number generator with the current time
     srand(time(0));
-
-    // Generate a random number between 1 and 99
     int randomNumber = rand() % 99 + 1;
     cout << randomNumber;
-
     return 0;
 }`;
 
 function ProfessorAddQuestion({ activeTab, NavTabs = [], NavLinks = [], editQuestion = false }) {
-
   const { _id } = useParams();
-  const [Loading, setLoading] = useState(editQuestion); //used to show loading spinner while fetching data if editQuestion is true
+  const [Loading, setLoading] = useState(editQuestion);
 
   const [formData, setFormData] = useState({
     QuestionName: '',
@@ -52,34 +44,26 @@ function ProfessorAddQuestion({ activeTab, NavTabs = [], NavLinks = [], editQues
     SolutionCode: DefaultSolutionCode,
     RandomTestChecked: false,
     RandomTestCode: DefaultRandomTestCode,
-    TestCases: [] // testCases is an array of objects with properties input, name, isChecked
+    TestCases: []
   });
 
   const FormMetaData = {
-    SolutionCodeTabDescription: `This Code will be used to evaluate correct Output for Testcases`,
-    SolutionInfoButtonDescription: `This Code will be used to evaluate correct Output for Testcases`,
-    RandomTestCodeTabDescription: `This Code will be used to generate random Testcases,\n please ensure that the code you provide here matches the input format`,
-    RandomTestCaseInfoButtonDescription: `This Code will be used to generate random Testcases,\n please ensure that the code you provide here matches the input format`,
-    HiddenTestCasesInfoModal: "These are the testcases That will not be visible to the user, and will be used for evaluation, make sure they exactly match the input format",
-    SampleTestCasesInfoModal: "These are the testcases That will be visible to the user, and will be used for evaluation, make sure they exactly match the input format"
-  }
+    SolutionCodeTabDescription: "Provide the correct solution code for evaluation.",
+    RandomTestCodeTabDescription: "Generate random test cases matching the input format.",
+    HiddenTestCasesInfoModal: "Hidden test cases are not visible to the user and are used for evaluation.",
+    SampleTestCasesInfoModal: "Sample test cases are visible to the user and are used for understanding the problem."
+  };
 
   const handleInputChange = (field, value) => {
-    setFormData({
-      ...formData,
-      [field]: value
-    });
+    setFormData({ ...formData, [field]: value });
   };
 
   useEffect(() => {
     if (editQuestion) {
-      // Fetch the question details from the database and set the formData
       fetchData(`/GetFullQuestion/${_id}`, setFormData, "Question", "Error while fetching question details");
       setLoading(false);
     }
   }, [editQuestion, _id]);
-
-  console.log(formData);
 
   if (Loading) {
     return (<LoadingSpinner />);
@@ -88,41 +72,67 @@ function ProfessorAddQuestion({ activeTab, NavTabs = [], NavLinks = [], editQues
   return (
     <>
       {!editQuestion && <NavbarWithProfileAndSidebar TabNames={NavTabs} TabLinks={NavLinks} ActiveTabIndex={1} />}
-      <div className="container my-3">
-        <div className="row">
-          <div className="col text-center my-3">
-            <h1 style={{ color: "white" }}>Add Question</h1>
+      <div
+        className="container-fluid p-4"
+        style={{
+          background: "linear-gradient(135deg, #ffffff, #f0f4f8)", // Light gradient
+          minHeight: "100vh",
+          color: "#333"
+        }}
+      >
+        <div className="row text-center mb-5">
+          <div className="col">
+            <h1
+              className="fw-bold"
+              style={{
+                color: "#1e88e5", // Bright blue for contrast
+                textShadow: "0px 4px 15px rgba(30, 136, 229, 0.3)"
+              }}
+            >
+              {editQuestion ? "Edit Question" : "Add Question"}
+            </h1>
           </div>
         </div>
         <div className="row">
           <Tab.Container defaultActiveKey={activeTab}>
-            <Nav variant="tabs" fill>
-              <Nav.Item>
-                <Nav.Link eventKey="Description" style={{ fontSize: "20px" }}>Description</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="Code" style={{ fontSize: "20px" }}>Code</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="TestCases" style={{ fontSize: "20px" }}>TestCases</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="Preview" style={{ fontSize: "20px" }}>Preview</Nav.Link>
-              </Nav.Item>
+            <Nav
+              variant="pills"
+              className="justify-content-center mb-4"
+              style={{
+                fontSize: "1.1rem",
+                fontWeight: "bold",
+              }}
+            >
+              {["Description", "Code", "TestCases", "Preview"].map((tab, index) => (
+                <Nav.Item key={index}>
+                  <Nav.Link
+                    eventKey={tab}
+                    className="rounded-pill px-4 py-2"
+                    style={{
+                      background: "linear-gradient(90deg, #1e88e5, #43a047)", // Vibrant gradient
+                      color: "#fff",
+                      boxShadow: "0px 5px 10px rgba(30, 136, 229, 0.3)",
+                      transition: "all 0.3s ease"
+                    }}
+                  >
+                    {tab}
+                  </Nav.Link>
+                </Nav.Item>
+              ))}
             </Nav>
             <Form>
               <Tab.Content>
-                <Tab.Pane eventKey="Description" style={{ color: "white" }}>
+                <Tab.Pane eventKey="Description">
                   <DescriptionTab handleInputChange={handleInputChange} formData={formData} />
                 </Tab.Pane>
                 <Tab.Pane eventKey="Code">
                   <CodeTab formData={formData} handleInputChange={handleInputChange} />
                 </Tab.Pane>
                 <Tab.Pane eventKey="TestCases">
-                  <TestcasesTab TestCases={formData.TestCases.map(testCase => {
-                    const { _id, ...testCaseWithoutId } = testCase;
-                    return testCaseWithoutId;
-                  })} handleInputChange={handleInputChange} />
+                  <TestcasesTab
+                    TestCases={formData.TestCases.map(({ _id, ...testCase }) => testCase)}
+                    handleInputChange={handleInputChange}
+                  />
                 </Tab.Pane>
                 <Tab.Pane eventKey="Preview">
                   <PreviewTab formData={formData} FormMetaData={FormMetaData} editQuestion={editQuestion} _id={_id} />
@@ -132,7 +142,20 @@ function ProfessorAddQuestion({ activeTab, NavTabs = [], NavLinks = [], editQues
           </Tab.Container>
         </div>
       </div>
-      {/* <RightsReservedFooter /> */}
+
+      <style jsx>{`
+        .nav-pills .nav-link.active {
+          background: linear-gradient(90deg, #43a047, #1e88e5) !important;
+          box-shadow: 0px 5px 15px rgba(30, 136, 229, 0.4) !important;
+        }
+        .nav-pills .nav-link {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nav-pills .nav-link:hover {
+          transform: scale(1.05);
+          box-shadow: 0px 5px 15px rgba(30, 136, 229, 0.3);
+        }
+      `}</style>
     </>
   );
 }

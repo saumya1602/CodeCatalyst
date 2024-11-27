@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function CharacterCounter({ maxLength, textAreaRef, fontColor = 'black' }) {
+function CharacterCounter({ maxLength, textAreaRef, fontColor = '#333' }) {
     const [remainingChars, setRemainingChars] = useState(maxLength);
 
     useEffect(() => {
@@ -14,11 +14,27 @@ function CharacterCounter({ maxLength, textAreaRef, fontColor = 'black' }) {
     }, [maxLength, textAreaRef]);
 
     return (
-        <div>
+        <div style={{ textAlign: 'center' }}>
             {remainingChars >= 0 ? (
-                <p style={{ color: fontColor }}>  {remainingChars} characters remaining</p>
+                <p
+                    style={{
+                        color: fontColor,
+                        fontSize: '1rem',
+                        fontWeight: '500',
+                    }}
+                >
+                    {remainingChars} characters remaining
+                </p>
             ) : (
-                <p style={{ color: 'red' }}>{Math.abs(remainingChars)} characters over limit</p>
+                <p
+                    style={{
+                        color: 'red',
+                        fontSize: '1rem',
+                        fontWeight: '500',
+                    }}
+                >
+                    {Math.abs(remainingChars)} characters over limit
+                </p>
             )}
         </div>
     );

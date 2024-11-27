@@ -10,7 +10,6 @@ import SubmitAssignmentModal from '../Modal/SubmitAssignmentModal';
 import { fetchAPI }  from '../../Scripts/Axios';
 
 function SubmitAssignmentNavbar({ _id, UserCodes }) {
-    
     const [showModal, setShowModal] = useState(false);
     const [profileData, setProfileData] = useState({});
     const [show, setShow] = useState(false);
@@ -35,15 +34,26 @@ function SubmitAssignmentNavbar({ _id, UserCodes }) {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar bg="light" variant="light" expand="lg">
                 <Container fluid className="px-3">
                     {
                         <Navbar.Brand variant="primary" onClick={handleShow}>
-                            <FontAwesomeIcon icon={faCode} style={{ color: 'white' }} />
+                            <FontAwesomeIcon icon={faCode} style={{ color: '#1e88e5' }} />
                         </Navbar.Brand>
                     }
                     <SubmitAssignmentModal _id={_id} UserCodes={UserCodes} />
-                    <FontAwesomeIcon icon={faUser} onClick={handlesShowProfileModal} style={{ cursor: 'pointer', color: 'white', border: '1px solid white', padding: '5px', borderRadius: '50%' }} />
+                    <FontAwesomeIcon 
+                        icon={faUser} 
+                        onClick={handlesShowProfileModal} 
+                        style={{
+                            cursor: 'pointer', 
+                            color: '#1e88e5', 
+                            border: '1px solid #1e88e5', 
+                            padding: '5px', 
+                            borderRadius: '50%',
+                            boxShadow: '0px 6px 15px rgba(30, 136, 229, 0.3)'
+                        }} 
+                    />
                 </Container>
             </Navbar>
             <ProfileModal show={showModal} onHide={() => setShowModal(false)} profileData={profileData} />

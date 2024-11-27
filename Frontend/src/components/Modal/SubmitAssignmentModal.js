@@ -10,7 +10,7 @@ import GroupedResults from '../List/EvaluateAssignmentDisplay';
 //     QuestionName: String,
 //     UserCode: String,
 //     QuestionId: String
-// }
+// } 
 function SubmitAssignmentModal({ _id, UserCodes }) {
     const [showModal, setShowModal] = useState(false);              //This state stores whether the modal is open or not
     const [logsMessage, setLogsMessage] = useState([]);             //this state stores the logs of the dry run

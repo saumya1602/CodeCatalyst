@@ -5,36 +5,37 @@ import CodeMirror from '@uiw/react-codemirror';
 import { cpp } from "@codemirror/lang-cpp";
 import { githubDark } from '@uiw/codemirror-theme-github'; // GitHub theme
 
-
 function HiddenQuestionDetailsPreview({ HiddenTestCases, SolutionCode, RandomTestChecked, RandomTestCode, FormMetaData }) {
     return (
         <Card style={{ border: "none" }} className="my-3">
             <Card.Body>
-                <Card.Title>Hidden Test Cases <InfoModal info={FormMetaData?.HiddenTestCasesInfoModal} /></Card.Title>
+                {/* Title */}
+                <Card.Title style={{ color: "#1e88e5" }}>
+                    Hidden Test Cases <InfoModal info={FormMetaData?.HiddenTestCasesInfoModal} />
+                </Card.Title>
+                
+                {/* Hidden Test Cases Section */}
                 {HiddenTestCases.length ? (
                     HiddenTestCases.map((testcase, index) => (
-                        (
-                            <div key={index}>
-                                Hidden Test Case {index}
-                                <Card>
-                                    <ListGroup variant="flush" className="px-1">
-                                        <ListGroup.Item>
-                                            <div>
-                                                <pre>{testcase.input}</pre>
-                                            </div>
-                                        </ListGroup.Item>
-                                    </ListGroup>
-                                </Card>
-                            </div>
-                        )
+                        <div key={index}>
+                            <Card style={{ marginBottom: '10px', background: 'linear-gradient(135deg, #ffffff, #f0f4f8)', borderRadius: '10px' }}>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item style={{ padding: '12px' }}>
+                                        <pre>{testcase.input}</pre>
+                                    </ListGroup.Item>
+                                </ListGroup>
+                            </Card>
+                        </div>
                     ))
                 ) : (
-                    <p>No hidden test cases provided</p>
+                    <p style={{ color: "#666" }}>No hidden test cases provided</p>
                 )}
-                {SolutionCode != "" ? (
+
+                {/* Solution Code Section */}
+                {SolutionCode !== "" ? (
                     <div>
                         <br />
-                        <Card.Title>Solution Code <InfoModal info={FormMetaData?.SolutionInfoButtonDescription} /> </Card.Title>
+                        <Card.Title style={{ color: "#1e88e5" }}>Solution Code <InfoModal info={FormMetaData?.SolutionInfoButtonDescription} /> </Card.Title>
                         <CodeMirror
                             value={SolutionCode}
                             theme={githubDark}
@@ -45,15 +46,16 @@ function HiddenQuestionDetailsPreview({ HiddenTestCases, SolutionCode, RandomTes
                 ) : (
                     <div>
                         <br />
-                        <Card.Title>Solution Code</Card.Title>
-                        <p>No Solution Code Provided</p>
+                        <Card.Title style={{ color: "#1e88e5" }}>Solution Code</Card.Title>
+                        <p style={{ color: "#666" }}>No Solution Code Provided</p>
                     </div>
                 )}
 
+                {/* Random Test Case Section */}
                 {RandomTestChecked ? (
                     <div>
                         <br />
-                        <Card.Title>Random Test Case Generator <InfoModal info={FormMetaData?.SolutionInfoButtonDescription} /> </Card.Title>
+                        <Card.Title style={{ color: "#1e88e5" }}>Random Test Case Generator <InfoModal info={FormMetaData?.SolutionInfoButtonDescription} /> </Card.Title>
                         <CodeMirror
                             value={RandomTestCode}
                             theme={githubDark}
@@ -64,8 +66,8 @@ function HiddenQuestionDetailsPreview({ HiddenTestCases, SolutionCode, RandomTes
                 ) : (
                     <div>
                         <br />
-                        <Card.Title>Random Test Case Generator <InfoModal info={FormMetaData?.RandomTestCaseInfoButtonDescription} /> </Card.Title>
-                        <p>No Random Test Code Generator provided</p>
+                        <Card.Title style={{ color: "#1e88e5" }}>Random Test Case Generator <InfoModal info={FormMetaData?.RandomTestCaseInfoButtonDescription} /> </Card.Title>
+                        <p style={{ color: "#666" }}>No Random Test Code Generator provided</p>
                     </div>
                 )}
             </Card.Body>

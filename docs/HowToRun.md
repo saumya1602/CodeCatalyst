@@ -8,16 +8,17 @@
 docker build
  --build-arg PORT=8080
  --build-arg CORS_ORIGIN=http://localhost:3000
- --build-arg DB_USERNAME=<username>
- --build-arg DB_PASSWORD=<password>
+ --build-arg DB_USERNAME=
+ --build-arg DB_PASSWORD=
  --build-arg BackendHost=http://localhost:8080
- --build-arg JWT_SECRET_KEY=<secret>
- --build-arg GEMINI_API_KEY=<GEMINI-API-KEY>
+ --build-arg JWT_SECRET_KEY=
+ --build-arg GEMINI_API_KEY=
  --build-arg PingBotDuration=300000
  --build-arg MemoryLimitForOutputFileInBytes=31457280
  --build-arg REACT_APP_SERVER_URL=http://localhost:8080
  --build-arg REACT_APP_SERVER_WS_URL=ws://localhost:8080
  -t testimage . ; docker run -p 8080:8080 testimage
+
  
 ```
 

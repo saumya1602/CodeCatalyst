@@ -7,5 +7,7 @@ axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+    <div style={{ backgroundColor: 'white', minHeight: '100vh' }}>
+        <App />
+    </div>
 );
